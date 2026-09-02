@@ -1,0 +1,291 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens
+   One near-black scale, one text scale, one very restrained accent.
+   ========================================================================== */
+@theme {
+  --color-bg: #040404;
+  --color-surface: #0a0a0a;
+  --color-surface-2: #101011;
+  --color-surface-3: #151517;
+
+  --color-ink: #f2f2f0;
+  --color-ink-2: #a3a3a0;
+  --color-ink-3: #6e6e6c;
+
+  --color-line: rgb(255 255 255 / 0.09);
+  --color-line-2: rgb(255 255 255 / 0.16);
+  --color-line-3: rgb(255 255 255 / 0.28);
+
+  --color-accent: #4fd1a5;
+  --color-accent-dim: #2c7a63;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* section rhythm */
+  --spacing-section: 7.5rem;
+  --spacing-section-lg: 11rem;
+
+  /* motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+:root {
+  color-scheme: dark;
+  --gutter: 1.375rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --gutter: 4rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --gutter: 6rem;
+  }
+}
+
+* {
+  min-width: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Native smooth scrolling covers reduced motion and the moment before Lenis
+   mounts. It is switched off under `.lenis-active` further down. */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "kern", "liga", "calt";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* The page is one continuous dark story — never let a scroll bounce
+   reveal a different colour behind it. */
+html,
+body {
+  background-color: var(--color-bg);
+}
+
+::selection {
+  background: rgb(79 209 165 / 0.28);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Scrollbar — thin and out of the way */
+@media (pointer: fine) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.14) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 0.12);
+    border-radius: 99px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(255 255 255 / 0.22);
+    background-clip: content-box;
+  }
+}
+
+/* ==========================================================================
+   Lenis — smooth scrolling
+   `.lenis-active` is set on <html> by <SmoothScroll> only when a Lenis
+   instance actually exists, so none of this applies under reduced motion.
+   ========================================================================== */
+/* Native smooth scrolling and Lenis animate the same scroll position against
+   each other, so it has to be off while Lenis drives.
+   `!important` is load-bearing, not laziness: Next writes `scroll-behavior`
+   inline on <html>, and an author `!important` rule is the only thing that
+   outranks a normal inline style. */
+html.lenis-active {
+  scroll-behavior: auto !important;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* While Lenis is animating a programmatic scrollTo, pointer events on the
+   page would let a stray hover interrupt the run. */
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 96rem;
+  padding-inline: var(--gutter);
+}
+
+/* Small uppercase metadata label */
+@utility eyebrow {
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+}
+
+/* Headline scale — lowercase, tight, generous around it */
+@utility display-1 {
+  font-size: clamp(2.125rem, 4.1vw, 3.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.034em;
+  font-weight: 400;
+}
+
+@utility display-2 {
+  font-size: clamp(1.75rem, 3.2vw, 2.875rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+
+@utility display-3 {
+  font-size: clamp(1.5rem, 2.5vw, 2.125rem);
+  line-height: 1.14;
+  letter-spacing: -0.028em;
+  font-weight: 400;
+}
+
+/* Positioning statement — deliberately a step below the section headings,
+   the way the reference weights a brand claim against a section label. */
+@utility display-statement {
+  font-size: clamp(1.625rem, 2.5vw, 2.25rem);
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+
+@utility lede {
+  font-size: clamp(0.9375rem, 1.05vw, 1rem);
+  line-height: 1.62;
+  color: var(--color-ink-2);
+  font-weight: 400;
+}
+
+/* Film grain laid over atmospheric imagery */
+@utility grain {
+  position: relative;
+}
+
+@utility grain-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+/* Edge fade for horizontal rails */
+@utility edge-fade-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-0.55deg);
+  }
+  50% {
+    transform: rotate(0.55deg);
+  }
+}
+
+/* ==========================================================================
+   Reduced motion — content stays, movement goes
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

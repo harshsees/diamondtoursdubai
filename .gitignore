@@ -1,0 +1,21 @@
+node_modules
+.next
+out
+build
+.DS_Store
+*.pem
+npm-debug.log*
+.env*
+!.env.example
+next-env.d.ts
+.vercel
+tsconfig.tsbuildinfo
+reference/
+
+# QA output
+.shots
+.qa
+
+# Python bytecode
+__pycache__/
+*.pyc
