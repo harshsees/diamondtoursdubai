@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens
+   Single source of truth for colour, type, spacing and motion.
+   Palette is deliberately narrow: white, warm neutrals, near-black ink and
+   one restrained accent. Photography carries the visual richness.
+   ========================================================================== */
+
+@theme {
+  /* Surfaces */
+  --color-canvas: #ffffff;
+  --color-surface: #f7f7f5;
+  --color-surface-2: #f0efec;
+
+  /* Ink */
+  --color-ink: #17181a;
+  --color-ink-2: #55585c;
+  --color-ink-3: #8a8d91;
+  --color-ink-inverse: #ffffff;
+
+  /* Lines */
+  --color-line: #e5e4e0;
+  --color-line-strong: #d3d2cd;
+
+  /* Accent — the only saturated colour in the system */
+  --color-accent: #0f5461;
+  --color-accent-hover: #0b414c;
+  --color-accent-soft: #eef4f5;
+
+  /* Feedback */
+  --color-danger: #a02020;
+  --color-success: #15654a;
+
+  /* Footer */
+  --color-footer: #1b1d1f;
+  --color-footer-2: #2a2d30;
+
+  /* Type */
+  --font-sans: var(--font-lato), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Content rhythm */
+  --spacing-section: 6rem;
+  --container-site: 1280px;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Native controls follow the light palette regardless of OS theme. */
+  input, select, textarea, button { font: inherit; color: inherit; }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 768px) { padding-inline: 2.25rem; }
+  @media (width >= 1024px) { padding-inline: 3rem; }
+  @media (width >= 1440px) { padding-inline: 3.5rem; }
+}
+
+/* Small uppercase label that sits above section headings. */
+@utility eyebrow {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Vertical rhythm for major page sections. */
+@utility section-y {
+  padding-block: 3.5rem;
+  @media (width >= 768px) { padding-block: 5rem; }
+  @media (width >= 1024px) { padding-block: 6.5rem; }
+}
+
+@utility section-y-sm {
+  padding-block: 2.75rem;
+  @media (width >= 768px) { padding-block: 3.75rem; }
+  @media (width >= 1024px) { padding-block: 4.5rem; }
+}
+
+/* ==========================================================================
+   Scroll reveal
+   Elements start hidden and are revealed by IntersectionObserver adding
+   [data-revealed]. Everything stays visible if JS or motion is unavailable.
+   ========================================================================== */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms var(--ease-out-soft),
+    transform 700ms var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal="fade"] { transform: none; }
+
+[data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Image reveal: a soft wipe plus a settling scale. */
+[data-image-reveal] {
+  clip-path: inset(0 0 12% 0);
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    clip-path 900ms var(--ease-out-soft),
+    opacity 700ms var(--ease-out-soft),
+    transform 1100ms var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-image-reveal][data-revealed] {
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+  transform: none;
+}
+
+/* No JS: never hide content. */
+.no-js [data-reveal],
+.no-js [data-image-reveal] {
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  [data-reveal],
+  [data-image-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-image-in {
+  from { opacity: 0; transform: scale(1.06); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.page-enter {
+  animation: page-enter 320ms var(--ease-out-soft) both;
+}
+
+/* Hero elements animate on load rather than on scroll. */
+.hero-in {
+  animation: hero-in 650ms var(--ease-out-soft) both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+.hero-image-in {
+  animation: hero-image-in 1100ms var(--ease-out-soft) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .hero-in,
+  .hero-image-in {
+    animation: none !important;
+  }
+}
