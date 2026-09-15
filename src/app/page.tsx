@@ -1,40 +1,45 @@
+import {
+  cargoHeading,
+  cargoTypes,
+  lanes,
+  lanesHeading,
+  serviceItems,
+  servicesHeading,
+} from "@/content/site";
+import { AboutSection } from "@/components/AboutSection";
+import { CallbackForm } from "@/components/CallbackForm";
+import { DifferenceGrid } from "@/components/DifferenceGrid";
 import { Hero } from "@/components/Hero";
-import { Positioning } from "@/components/Positioning";
-import { Services } from "@/components/Services";
-import { Process } from "@/components/Process";
-import { Faq } from "@/components/Faq";
-import { Testimonials } from "@/components/Testimonials";
-import { FieldGrid } from "@/components/FieldGrid";
-import { Contact } from "@/components/Contact";
-import { Closing } from "@/components/Closing";
-import { faqs } from "@/content/site";
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
+import { IntroBand } from "@/components/IntroBand";
+import { NumberedList } from "@/components/NumberedList";
+import { SkylineStrip } from "@/components/SkylineStrip";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Positioning />
-      <Services />
-      <Process />
-      <Faq />
-      <Testimonials />
-      <FieldGrid />
-      <Contact />
-      <Closing />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <IntroBand />
+      <DifferenceGrid />
+      <AboutSection />
+
+      <div className="container pill-section">
+        <NumberedList
+          lead={cargoHeading.lead}
+          strong={cargoHeading.strong}
+          items={cargoTypes}
+          href="/cargo"
+        />
+        <NumberedList
+          lead={servicesHeading.lead}
+          strong={servicesHeading.strong}
+          items={serviceItems}
+          href="/services"
+        />
+        <NumberedList lead={lanesHeading.lead} strong={lanesHeading.strong} items={lanes} />
+        <CallbackForm />
+      </div>
+
+      <SkylineStrip />
     </>
   );
 }

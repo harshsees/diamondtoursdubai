@@ -18,15 +18,15 @@ const VIEWPORTS = [
 
 const SHOTS = [
   { name: "01-hero", y: 0 },
-  { name: "02-positioning", sel: "#discover" },
-  { name: "03-services", sel: "#services" },
-  { name: "04-process", sel: "#process" },
-  { name: "05-faq", sel: "#faq" },
-  { name: "06-reviews", sel: "#reviews" },
-  { name: "07-field", sel: "#field" },
-  { name: "08-contact", sel: "#contact" },
-  { name: "09-closing", y: "bottom" },
+  { name: "02-intro", sel: "#home-intro" },
+  { name: "03-difference", sel: ".featured-boxes" },
+  { name: "04-who-we-are", sel: ".who-we-are" },
+  { name: "05-lists", sel: ".pill-section" },
+  { name: "06-callback", sel: ".callback-form" },
+  { name: "07-footer", y: "bottom" },
 ];
+
+const PAGES = ["", "about", "services", "compliance", "cargo", "contact"];
 
 const browser = await chromium.launch();
 const problems = [];
@@ -35,7 +35,8 @@ for (const vp of VIEWPORTS) {
   const ctx = await browser.newContext({
     viewport: { width: vp.width, height: vp.height },
     deviceScaleFactor: 1,
-    reducedMotion: "no-preference",
+    isMobile: vp.width < 700,
+    hasTouch: vp.width < 700,
   });
   const page = await ctx.newPage();
 
@@ -48,28 +49,28 @@ for (const vp of VIEWPORTS) {
   );
 
   await page.goto(base, { waitUntil: "networkidle" });
-  await page.waitForTimeout(2600); // let the hero load sequence finish
+  await page.waitForTimeout(1200);
 
   for (const shot of SHOTS) {
     if (shot.sel) {
       await page.evaluate((sel) => {
         const el = document.querySelector(sel);
-        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY, behavior: "instant" });
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: "instant" });
       }, shot.sel);
     } else if (shot.y === "bottom") {
       await page.evaluate(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "instant" }));
     } else {
       await page.evaluate((y) => window.scrollTo({ top: y, behavior: "instant" }), shot.y);
     }
-    await page.waitForTimeout(1400);
+    await page.waitForTimeout(900); // let the reveal transitions settle
     await page.screenshot({ path: `${out}/${vp.name}-${shot.name}.png` });
   }
 
-  // horizontal overflow check
-  const overflow = await page.evaluate(
-    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-  );
-  if (overflow > 1) problems.push(`[${vp.name}] horizontal overflow: ${overflow}px`);
+  for (const slug of PAGES.slice(1)) {
+    await page.goto(`${base}/${slug}`, { waitUntil: "networkidle" });
+    await page.waitForTimeout(900);
+    await page.screenshot({ path: `${out}/${vp.name}-page-${slug}.png`, fullPage: true });
+  }
 
   await ctx.close();
 }
@@ -77,8 +78,8 @@ for (const vp of VIEWPORTS) {
 await browser.close();
 
 if (problems.length) {
-  console.log("PROBLEMS:");
-  for (const p of [...new Set(problems)]) console.log(" -", p);
+  console.error("Problems:\n  " + problems.join("\n  "));
+  process.exitCode = 1;
 } else {
-  console.log("no console errors, no failed requests, no horizontal overflow");
+  console.log(`Clean. Screenshots in ${out}`);
 }

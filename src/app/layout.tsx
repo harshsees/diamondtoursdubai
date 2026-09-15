@@ -1,18 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
+import { Open_Sans, Shadows_Into_Light } from "next/font/google";
 
 import { brand, contact, social } from "@/content/site";
-import { Navbar } from "@/components/Navbar";
-import { PageTransition } from "@/components/PageTransition";
-import { SmoothScroll } from "@/components/SmoothScroll";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { ToTop } from "@/components/ToTop";
 
 import "./globals.css";
 
-const manrope = Manrope({
+const openSans = Open_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "600", "700", "800"],
   display: "swap",
-  variable: "--font-manrope",
+  variable: "--font-open-sans",
+});
+
+/** Used for the single script-set word in the intro band, nowhere else. */
+const script = Shadows_Into_Light({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-script",
 });
 
 const title = `${brand.legalName} — cross-border trade, handled end to end`;
@@ -21,10 +29,7 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(brand.url),
-  title: {
-    default: title,
-    template: `%s — ${brand.name}`,
-  },
+  title: { default: title, template: `%s — ${brand.name}` },
   description,
   applicationName: brand.legalName,
   keywords: [
@@ -45,12 +50,7 @@ export const metadata: Metadata = {
     description,
     images: [{ url: "/media/og.jpg", width: 1200, height: 630, alt: brand.legalName }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-    images: ["/media/og.jpg"],
-  },
+  twitter: { card: "summary_large_image", title, description, images: ["/media/og.jpg"] },
   robots: { index: true, follow: true },
   icons: {
     icon: [
@@ -62,8 +62,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#040404",
-  colorScheme: "dark",
+  themeColor: "#28166f",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -80,28 +80,28 @@ const organizationSchema = {
   telephone: contact.phone,
   address: {
     "@type": "PostalAddress",
-    streetAddress: contact.address.line,
-    addressLocality: contact.address.city,
-    addressCountry: contact.address.country,
+    streetAddress: contact.address.line2,
+    addressLocality: "Toronto",
+    addressRegion: "ON",
+    addressCountry: "CA",
   },
   sameAs: social.map((s) => s.href),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang="en" className={`${openSans.variable} ${script.variable}`}>
       <body>
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-100 focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2 focus:text-[0.8125rem] focus:text-[#080808]"
-        >
+        <a href="#main" className="sr-only skip-link">
           Skip to content
         </a>
 
-        <SmoothScroll>
-          <Navbar />
-          <PageTransition>{children}</PageTransition>
-        </SmoothScroll>
+        <Header />
+        <main role="main" id="main">
+          {children}
+        </main>
+        <Footer />
+        <ToTop />
 
         <script
           type="application/ld+json"

@@ -1,19 +1,27 @@
 import Link from "next/link";
 
+import { pageBanners } from "@/content/site";
+import { PageHeader } from "@/components/PageHeader";
+import { SkylineStrip } from "@/components/SkylineStrip";
+
 export default function NotFound() {
   return (
-    <div className="container-page flex min-h-[100svh] flex-col items-center justify-center text-center">
-      <p className="eyebrow">error 404</p>
-      <h1 className="display-2 mt-4 text-ink">this page isn&apos;t on the manifest</h1>
-      <p className="lede mt-5 max-w-[28rem] text-balance">
-        The address you followed doesn&apos;t exist here. Everything else is one click away.
-      </p>
-      <Link
-        href="/"
-        className="mt-9 inline-flex items-center gap-2 rounded-[10px] bg-ink px-5 py-[0.6875rem] text-[0.8125rem] font-medium leading-none text-[#080808] transition-all duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-px hover:bg-white"
-      >
-        back to the homepage
-      </Link>
-    </div>
+    <>
+      <PageHeader title="Page not found" image={pageBanners.legal.image} />
+      <div className="container prose">
+        <div className="row">
+          <div className="col-lg-8">
+            <h2 className="page-lede">This Page Isn&apos;t On The Manifest.</h2>
+            <p className="mb-4">
+              The address you followed doesn&apos;t exist here. Everything else is one click away.
+            </p>
+            <Link href="/" className="btn btn-primary btn-px-4 btn-py-2">
+              Back to the homepage
+            </Link>
+          </div>
+        </div>
+      </div>
+      <SkylineStrip />
+    </>
   );
 }

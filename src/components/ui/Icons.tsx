@@ -1,252 +1,163 @@
-import type { SVGProps } from "react";
-
 /**
- * Thin-line pictograms. Deliberately hairline (1.1px at 28px) so they read as
- * drawn marks rather than UI icons, matching the restraint of the type.
+ * All iconography is inline SVG so nothing 404s and nothing is fetched.
+ *
+ * Two families:
+ *  - `ServiceIcon` — the 65 x 65 two-tone line marks used beside the
+ *    differentiators and service rows. Indigo line work, red accents, the
+ *    same visual weight as the reference's icon set.
+ *  - the small solid glyphs used in the footer, header and controls.
  */
 
-type IconProps = SVGProps<SVGSVGElement>;
+const line = {
+  fill: "none",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
 
-function Base({ children, ...rest }: IconProps) {
+const P = "#28166f";
+const S = "#da251d";
+
+const serviceIcons: Record<string, React.ReactNode> = {
+  /* One named contact accountable for the file. */
+  coordinator: (
+    <>
+      <circle cx="26" cy="21" r="9" stroke={P} {...line} />
+      <path d="M10 52c0-8.8 7.2-16 16-16s16 7.2 16 16" stroke={P} {...line} />
+      <path d="M44 26v-2a9 9 0 0 1 9-9M53 15a9 9 0 0 1 0 18h-2" stroke={S} {...line} />
+      <circle cx="53" cy="42" r="3" stroke={S} {...line} />
+    </>
+  ),
+  /* An itemised, costed quotation rather than an estimate. */
+  quote: (
+    <>
+      <path d="M14 8h27l9 9v39a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3Z" stroke={P} {...line} />
+      <path d="M41 8v9h9" stroke={P} {...line} />
+      <path d="M20 28h14M20 36h20M20 44h12" stroke={P} {...line} />
+      <path d="M44 34v14M40 37.5c0-1.9 1.8-3.5 4-3.5s4 1.6 4 3.5-1.8 3.5-4 3.5-4 1.6-4 3.5 1.8 3.5 4 3.5 4-1.6 4-3.5" stroke={S} {...line} />
+    </>
+  ),
+  /* Identity and ownership verified on both sides. */
+  verify: (
+    <>
+      <path d="M32 6 54 14v16c0 13.4-8.9 24.4-22 28C18.9 54.4 10 43.4 10 30V14Z" stroke={P} {...line} />
+      <path d="m22 31 7 7 14-14" stroke={S} {...line} />
+    </>
+  ),
+  /* Independent inspection before funds move. */
+  inspect: (
+    <>
+      <path d="M8 20 32 9l24 11-24 11Z" stroke={P} {...line} />
+      <path d="M8 20v24l24 11 24-11V20" stroke={P} {...line} />
+      <path d="M32 31v24" stroke={P} {...line} />
+      <circle cx="42" cy="36" r="8" stroke={S} {...line} />
+      <path d="m48 42 6 6" stroke={S} {...line} />
+    </>
+  ),
+  /* HS classification reviewed before booking. */
+  classify: (
+    <>
+      <path d="M33 7H12a5 5 0 0 0-5 5v21a5 5 0 0 0 1.5 3.5l21 21a4 4 0 0 0 5.6 0l19.4-19.4a4 4 0 0 0 0-5.6l-21-21A5 5 0 0 0 33 7Z" stroke={P} {...line} />
+      <circle cx="20" cy="20" r="4" stroke={S} {...line} />
+      <path d="M30 38h14M30 46h9" stroke={S} {...line} />
+    </>
+  ),
+  /* Marine and inland transit cover arranged. */
+  insure: (
+    <>
+      <path d="M32 8c13.3 0 24 10.7 24 24H8C8 18.7 18.7 8 32 8Z" stroke={P} {...line} />
+      <path d="M32 8v24M20 32c0 6.6-1.8 12-4 12M44 32c0 6.6 1.8 12 4 12" stroke={P} {...line} />
+      <path d="M32 32v18a6 6 0 0 1-12 0" stroke={S} {...line} />
+    </>
+  ),
+  /* Container, RoRo, flat-rack and breakbulk. */
+  modes: (
+    <>
+      <path d="M6 44h52l-6 12H12Z" stroke={P} {...line} />
+      <path d="M12 44V28h34v16" stroke={P} {...line} />
+      <path d="M22 28V16h14v12" stroke={S} {...line} />
+      <path d="M20 34v10M29 34v10M38 34v10" stroke={P} {...line} />
+      <path d="M46 20h10v10" stroke={S} {...line} />
+    </>
+  ),
+  /* Letter of credit and escrow structures. */
+  escrow: (
+    <>
+      <path d="M6 26 32 12l26 14" stroke={P} {...line} />
+      <path d="M12 26v20M24 26v20M40 26v20M52 26v20" stroke={P} {...line} />
+      <path d="M6 52h52" stroke={P} {...line} />
+      <rect x="26" y="34" width="16" height="12" rx="2" stroke={S} {...line} />
+      <path d="M30 34v-3a4 4 0 0 1 8 0v3" stroke={S} {...line} />
+    </>
+  ),
+  /* Full document pack retained and handed over. */
+  documents: (
+    <>
+      <path d="M18 6h20l10 10v34a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V10a4 4 0 0 1 4-4Z" stroke={P} {...line} />
+      <path d="M38 6v10h10" stroke={P} {...line} />
+      <path d="M6 16v38a4 4 0 0 0 4 4h28" stroke={S} {...line} />
+      <path d="M23 27h14M23 35h16M23 43h10" stroke={S} {...line} />
+    </>
+  ),
+};
+
+export function ServiceIcon({ name, className = "" }: { name: string; className?: string }) {
+  const glyph = serviceIcons[name] ?? serviceIcons.modes;
+  return (
+    <svg viewBox="0 0 64 64" className={`service-img ${className}`} aria-hidden="true" focusable="false">
+      {glyph}
+    </svg>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* small solid glyphs                                                         */
+/* -------------------------------------------------------------------------- */
+
+const glyphs: Record<string, string> = {
+  instagram:
+    "M8 0C5.8 0 5.5 0 4.6.1 3.8.1 3.2.2 2.7.4c-.5.2-1 .5-1.4.9-.4.4-.7.9-.9 1.4-.2.5-.3 1.1-.4 2C0 5.5 0 5.8 0 8s0 2.5.1 3.4c0 .9.2 1.5.4 2 .2.5.5 1 .9 1.4.4.4.9.7 1.4.9.5.2 1.1.3 2 .4.9 0 1.2.1 3.3.1s2.5 0 3.4-.1c.9 0 1.5-.2 2-.4.5-.2 1-.5 1.4-.9.4-.4.7-.9.9-1.4.2-.5.3-1.1.4-2 0-.9.1-1.2.1-3.4s0-2.5-.1-3.4c0-.9-.2-1.5-.4-2a3.9 3.9 0 0 0-.9-1.4c-.4-.4-.9-.7-1.4-.9-.5-.2-1.1-.3-2-.4C10.5 0 10.2 0 8 0Zm0 1.4c2.1 0 2.4 0 3.3.1.8 0 1.2.2 1.5.3.4.1.6.3.9.6.3.3.4.5.6.9.1.3.3.7.3 1.5 0 .9.1 1.1.1 3.2s0 2.4-.1 3.3c0 .8-.2 1.2-.3 1.5-.1.4-.3.6-.6.9-.3.3-.5.4-.9.6-.3.1-.7.3-1.5.3-.9 0-1.1.1-3.3.1s-2.4 0-3.3-.1c-.8 0-1.2-.2-1.5-.3a2.5 2.5 0 0 1-.9-.6c-.3-.3-.4-.5-.6-.9-.1-.3-.3-.7-.3-1.5 0-.9-.1-1.1-.1-3.3s0-2.4.1-3.3c0-.8.2-1.2.3-1.5.1-.4.3-.6.6-.9.3-.3.5-.4.9-.6.3-.1.7-.3 1.5-.3.9 0 1.1-.1 3.3-.1Zm0 2.5a4.1 4.1 0 1 0 0 8.2 4.1 4.1 0 0 0 0-8.2Zm0 6.8a2.7 2.7 0 1 1 0-5.4 2.7 2.7 0 0 1 0 5.4Zm5.2-7a1 1 0 1 1-1.9 0 1 1 0 0 1 1.9 0Z",
+  facebook:
+    "M10.3 16V9.8h2.1l.3-2.4h-2.4V5.8c0-.7.2-1.2 1.2-1.2h1.3V2.4c-.2 0-1-.1-1.9-.1-1.9 0-3.2 1.2-3.2 3.3v1.8H5.6v2.4h2.1V16h2.6Z",
+  twitter:
+    "M16 3c-.6.3-1.2.5-1.9.6.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8A3.3 3.3 0 0 0 7.8 5.7 9.3 9.3 0 0 1 1.1 2.3a3.3 3.3 0 0 0 1 4.4c-.5 0-1-.2-1.5-.4a3.3 3.3 0 0 0 2.6 3.2c-.5.2-1 .2-1.5.1a3.3 3.3 0 0 0 3 2.3A6.6 6.6 0 0 1 0 13.3a9.3 9.3 0 0 0 5 1.5c6 0 9.4-5.1 9.2-9.6.6-.5 1.2-1.1 1.6-1.9Z",
+  linkedin:
+    "M3.6 16H.3V5.3h3.3V16ZM1.9 3.9A1.9 1.9 0 1 1 1.9.1a1.9 1.9 0 0 1 0 3.8ZM16 16h-3.3v-5.2c0-1.2 0-2.8-1.7-2.8s-2 1.4-2 2.7V16H5.7V5.3H8.9v1.5h.1a3.5 3.5 0 0 1 3.1-1.7c3.3 0 4 2.2 4 5.1V16Z",
+  map: "M6 1 1 3v12l5-2 4 2 5-2V1l-5 2-4-2Zm0 1.7 4 2v9.6l-4-2V2.7Z",
+  phone:
+    "M3.7 1H2C1.4 1 1 1.4 1 2c0 7.2 5.8 13 13 13 .6 0 1-.4 1-1v-1.7c0-.4-.3-.8-.7-1l-2.7-.7c-.4-.1-.8 0-1 .3l-1 1a10.6 10.6 0 0 1-4.5-4.5l1-1c.3-.2.4-.6.3-1L4.7 1.7C4.5 1.3 4.1 1 3.7 1Z",
+  envelope:
+    "M1 3.5C1 2.7 1.7 2 2.5 2h11c.8 0 1.5.7 1.5 1.5v9c0 .8-.7 1.5-1.5 1.5h-11C1.7 14 1 13.3 1 12.5v-9Zm1.7.5L8 8.3 13.3 4H2.7Zm10.8 1.1L8.5 9.9a.8.8 0 0 1-1 0L2.5 5.1v7.4h11V5.1Z",
+  globe:
+    "M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm4.9 4.7h-2A11 11 0 0 0 9.5 2.8a5.6 5.6 0 0 1 3.4 2.9ZM8 2.5c.6.8 1.1 2 1.4 3.2H6.6c.3-1.2.8-2.4 1.4-3.2ZM2.5 8a5.5 5.5 0 0 1 .2-1.3h2.4a11.6 11.6 0 0 0 0 2.6H2.7A5.5 5.5 0 0 1 2.5 8Zm.6 2.3h2A11 11 0 0 0 6.5 13.2a5.6 5.6 0 0 1-3.4-2.9Zm2-4.6h-2a5.6 5.6 0 0 1 3.4-2.9 11 11 0 0 0-1.4 2.9ZM8 13.5c-.6-.8-1.1-2-1.4-3.2h2.8c-.3 1.2-.8 2.4-1.4 3.2Zm1.7-4.6H6.3a10.4 10.4 0 0 1 0-2.6h3.4a10.4 10.4 0 0 1 0 2.6Zm-.2 4.3a11 11 0 0 0 1.4-2.9h2a5.6 5.6 0 0 1-3.4 2.9Zm1.8-4.3a11.6 11.6 0 0 0 0-2.6h2.4a5.5 5.5 0 0 1 0 2.6h-2.4Z",
+  check: "M6.2 12.4 1.6 7.8l1.4-1.4 3.2 3.2 7-7 1.4 1.4-8.4 8.4Z",
+  bars: "M1 3h14v2H1V3Zm0 4h14v2H1V7Zm0 4h14v2H1v-2Z",
+  chevronUp: "m8 4.5 6 6-1.4 1.4L8 7.3l-4.6 4.6L2 10.5l6-6Z",
+  chevronLeft: "m10.5 2 1.4 1.4L7.3 8l4.6 4.6-1.4 1.4-6-6 6-6Z",
+  chevronRight: "M5.5 2 4.1 3.4 8.7 8l-4.6 4.6L5.5 14l6-6-6-6Z",
+};
+
+export function Icon({
+  name,
+  className = "",
+  size = 16,
+}: {
+  name: keyof typeof glyphs | string;
+  className?: string;
+  size?: number;
+}) {
+  const d = glyphs[name];
+  if (!d) return null;
   return (
     <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.1"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      viewBox="0 0 16 16"
+      width={size}
+      height={size}
+      className={className}
       aria-hidden="true"
-      {...rest}
+      focusable="false"
     >
-      {children}
-    </svg>
-  );
-}
-
-/* ---------------------------------------------------------------- services */
-
-export function FreightIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M3 22.5c1.6 1.4 3.2 1.4 4.8 0s3.2-1.4 4.8 0 3.2 1.4 4.8 0 3.2-1.4 4.8 0 3.2 1.4 4.8 0" />
-      <path d="M5.5 18.5h21l-2.6 4H8.1z" />
-      <path d="M10 18.5v-5.5h11v5.5" />
-      <path d="M15.5 13V6.5" />
-      <path d="M12.5 6.5h6" />
-    </Base>
-  );
-}
-
-export function SourcingIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M3.5 20.5v-5l2.5-5h10.5v10" />
-      <path d="M16.5 15.5h6l4 3.5v1.5h-3" />
-      <circle cx="9.5" cy="21.5" r="2.6" />
-      <circle cx="21" cy="21.5" r="2.6" />
-      <path d="M12.1 21.5h6.3" />
-      <path d="M6.9 10.5v5h9.6" />
-    </Base>
-  );
-}
-
-export function ComplianceIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M16 3.5 26 7v8.2c0 5.4-3.9 10.2-10 13.3-6.1-3.1-10-7.9-10-13.3V7z" />
-      <path d="m11.5 15.6 3.1 3.2 6-6.4" />
-    </Base>
-  );
-}
-
-/* ---------------------------------------------------------------- process */
-
-export function MeetingIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M4 8.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-5.6L7 20v-3.5H6a2 2 0 0 1-2-2z" />
-      <path d="M13 20.2a2 2 0 0 0 2 2h4.8L24 26v-3.8h1a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2h-5" />
-      <path d="M8 11.5h6.5" />
-    </Base>
-  );
-}
-
-export function VerifyIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M16 3.6c1.1 1.5 2.9 1.9 4.6 1.1 1 1.6 2.8 2.1 4.5 1.4.3 1.9 1.7 3.1 3.4 3.2-.5 1.8.3 3.5 1.9 4.3-1.2 1.5-1.2 3.4 0 4.8-1.6.8-2.4 2.5-1.9 4.3-1.7.1-3.1 1.3-3.4 3.2-1.7-.7-3.5-.2-4.5 1.4-1.7-.8-3.5-.4-4.6 1.1" />
-      <path d="M16 3.6c-1.1 1.5-2.9 1.9-4.6 1.1-1 1.6-2.8 2.1-4.5 1.4-.3 1.9-1.7 3.1-3.4 3.2.5 1.8-.3 3.5-1.9 4.3 1.2 1.5 1.2 3.4 0 4.8 1.6.8 2.4 2.5 1.9 4.3 1.7.1 3.1 1.3 3.4 3.2 1.7-.7 3.5-.2 4.5 1.4 1.7-.8 3.5-.4 4.6 1.1" />
-      <path d="m11.8 16.1 2.9 3 5.5-5.9" />
-    </Base>
-  );
-}
-
-export function QuoteIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M6 4.5h14l6 6v17H6z" />
-      <path d="M20 4.5v6h6" />
-      <path d="M10.5 16.5h11" />
-      <path d="M10.5 20.5h7" />
-      <path d="M10.5 12.5h4" />
-    </Base>
-  );
-}
-
-export function ContractIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M5.5 6.5h21v14h-21z" />
-      <path d="M5.5 11.5h21" />
-      <path d="M9.5 16.2h5" />
-      <path d="M3.5 25.5c2-1.6 4-1.6 6 0s4 1.6 6 0 4-1.6 6 0 4 1.6 6 0" />
-      <path d="M20.5 16.2h2.4" />
-    </Base>
-  );
-}
-
-export function ShipIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M4 21.5c1.7 1.5 3.4 1.5 5.1 0s3.4-1.5 5.1 0 3.4 1.5 5.1 0 3.4-1.5 5.1 0 2.1 1 3.6 0" />
-      <path d="M6.5 17.5 8 12h16l1.5 5.5" />
-      <path d="M12 12V7.5h8V12" />
-      <path d="M16 7.5v-4" />
-    </Base>
-  );
-}
-
-export function HandoverIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M4 13.5 16 7l12 6.5-12 6.5z" />
-      <path d="M4 13.5v8L16 28l12-6.5v-8" />
-      <path d="M16 20v8" />
-    </Base>
-  );
-}
-
-/* ---------------------------------------------------------------- sectors */
-
-export function CarIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M4 20v-4.2l2.6-5.6a2 2 0 0 1 1.8-1.2h15.2a2 2 0 0 1 1.8 1.2L28 15.8V20" />
-      <path d="M4 20h24" />
-      <circle cx="9.5" cy="20.5" r="2.8" />
-      <circle cx="22.5" cy="20.5" r="2.8" />
-      <path d="M6.6 15.8h18.8" />
-    </Base>
-  );
-}
-
-export function ExcavatorIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M3 23.5h20" />
-      <circle cx="7" cy="23.5" r="3" />
-      <circle cx="17" cy="23.5" r="3" />
-      <path d="M6 20.5v-5h10v5" />
-      <path d="M13 15.5 20 7l6 5-3.5 5" />
-      <path d="M22.5 17.5h6v4h-6z" />
-    </Base>
-  );
-}
-
-export function BoatIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M4 22c1.7 1.5 3.4 1.5 5.1 0s3.4-1.5 5.1 0 3.4 1.5 5.1 0 3.4-1.5 5.1 0 2.1 1 3.6 0" />
-      <path d="m6 18 2-5h16l-3 5z" />
-      <path d="M14.5 13V4l8 9" />
-    </Base>
-  );
-}
-
-export function TractorIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <circle cx="9" cy="21" r="5.5" />
-      <circle cx="23" cy="22.5" r="4" />
-      <path d="M5 14.5h8l1.5-6h5v10" />
-      <path d="M14.5 21h4.5" />
-      <path d="M19.5 14.5h5v4" />
-    </Base>
-  );
-}
-
-export function DrumIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <ellipse cx="16" cy="7.5" rx="7.5" ry="3" />
-      <path d="M8.5 7.5v17c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-17" />
-      <path d="M8.5 13.5c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3" />
-      <path d="M8.5 19.5c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3" />
-    </Base>
-  );
-}
-
-export function PlaneIcon(p: IconProps) {
-  return (
-    <Base {...p}>
-      <path d="M14.5 4.5a1.6 1.6 0 0 1 3 0v7.9l10 5.6v2.6l-10-3v5.3l3 2.3v2.3l-4.5-1.4-4.5 1.4v-2.3l3-2.3v-5.3l-10 3V18l10-5.6z" />
-    </Base>
-  );
-}
-
-/* ---------------------------------------------------------------- mapping */
-
-export const serviceIcons = {
-  freight: FreightIcon,
-  sourcing: SourcingIcon,
-  compliance: ComplianceIcon,
-} as const;
-
-export const processIcons = {
-  meeting: MeetingIcon,
-  verify: VerifyIcon,
-  quote: QuoteIcon,
-  contract: ContractIcon,
-  freight: ShipIcon,
-  handover: HandoverIcon,
-} as const;
-
-export const sectorIcons = {
-  car: CarIcon,
-  excavator: ExcavatorIcon,
-  boat: BoatIcon,
-  tractor: TractorIcon,
-  drum: DrumIcon,
-  plane: PlaneIcon,
-} as const;
-
-/* ---------------------------------------------------------------- chrome */
-
-export function ChevronLeft(p: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"
-      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
-      <path d="M14.5 6 9 12l5.5 6" />
-    </svg>
-  );
-}
-
-export function ChevronRight(p: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"
-      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...p}>
-      <path d="M9.5 6 15 12l-5.5 6" />
-    </svg>
-  );
-}
-
-export function StarIcon({ filled = true, ...p }: IconProps & { filled?: boolean }) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true"
-      fill={filled ? "currentColor" : "none"}
-      stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" {...p}>
-      <path d="m12 3.6 2.65 5.37 5.93.86-4.29 4.18 1.01 5.9L12 17.13l-5.3 2.78 1.01-5.9-4.29-4.18 5.93-.86z" />
+      <path d={d} />
     </svg>
   );
 }
