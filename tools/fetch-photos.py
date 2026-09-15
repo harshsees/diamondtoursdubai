@@ -23,7 +23,7 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "public", "media")
 API = "https://commons.wikimedia.org/w/api.php"
-UA = "MeridianExportSiteBuild/1.0 (static marketing site)"
+UA = "KeyriseExportSiteBuild/1.0 (static marketing site)"
 
 # --------------------------------------------------------------------------
 # sources

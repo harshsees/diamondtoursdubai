@@ -4,6 +4,9 @@ import { brand } from "@/content/site";
  * A 200 x 60 wordmark drawn inline, matching the footprint the reference
  * reserves for its logo: a wide word with a mark set into it and a tracked-out
  * second line beneath.
+ *
+ * Fills read from the palette tokens rather than hard-coded hex, so a change
+ * to the brand colours in globals.css carries through to the logo.
  */
 export function Logo({ className = "" }: { className?: string }) {
   return (
@@ -22,28 +25,37 @@ export function Logo({ className = "" }: { className?: string }) {
         fontSize="27"
         fontWeight="800"
         letterSpacing="0.5"
-        fill="#da251d"
+        fill="var(--color-secondary)"
       >
-        MERI
+        KEY
       </text>
-      {/* The mark stands in for the D — a compass rose read as a meridian. */}
-      <g transform="translate(66 8)">
-        <circle cx="12" cy="12" r="12" fill="#28166f" />
-        <path d="M12 3.5 14.6 10 12 20.5 9.4 10Z" fill="#fff" />
-        <path d="M3.5 12h17" stroke="#fff" strokeWidth="1.2" />
-        <ellipse cx="12" cy="12" rx="5" ry="9" fill="none" stroke="#fff" strokeWidth="1.2" />
+
+      {/* The mark: a rising chevron — the "rise" in Keyrise. */}
+      <g transform="translate(58 8)">
+        <circle cx="12" cy="12" r="12" fill="var(--color-primary)" />
+        <path
+          d="M6 15.5 12 8.5l6 7"
+          fill="none"
+          stroke="#fff"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M7.5 18.5h9" stroke="#fff" strokeWidth="2.1" strokeLinecap="round" />
       </g>
+
       <text
-        x="93"
+        x="87"
         y="30"
         fontFamily="var(--font-sans)"
         fontSize="27"
         fontWeight="800"
         letterSpacing="0.5"
-        fill="#da251d"
+        fill="var(--color-secondary)"
       >
-        IAN
+        RISE
       </text>
+
       <text
         x="1"
         y="50"
@@ -51,7 +63,7 @@ export function Logo({ className = "" }: { className?: string }) {
         fontSize="15"
         fontWeight="700"
         letterSpacing="7.6"
-        fill="#28166f"
+        fill="var(--color-primary)"
       >
         {brand.nameSub}
       </text>

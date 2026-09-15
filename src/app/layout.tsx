@@ -25,7 +25,7 @@ const script = Shadows_Into_Light({
 
 const title = `${brand.legalName} — cross-border trade, handled end to end`;
 const description =
-  "Meridian Export Co. sources, ships and clears high-value cargo — motor vehicles, heavy machinery, marine craft and industrial commodities — across North America, Europe, the Gulf and Asia.";
+  "Keyrise Export Co. sources, ships and clears high-value cargo — motor vehicles, heavy machinery, marine craft and industrial commodities — across North America, Europe, the Gulf and Asia.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(brand.url),

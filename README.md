@@ -1,9 +1,9 @@
-# Meridian Export Co. — marketing site
+# Keyrise Export Co. — marketing site
 
 A Next.js (App Router) marketing site for a cross-border trade business.
 
 The frontend is a deliberate recreation of the layout, typography, spacing,
-colour and interaction model of an existing production site, with Meridian's
+colour and interaction model of an existing production site, with Keyrise's
 own brand and content dropped into that structure. Values in
 `src/app/globals.css` were measured off the rendered reference rather than
 invented — the container is 1140px, body type is Open Sans 14/26, the brand

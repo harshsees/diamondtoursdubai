@@ -9,27 +9,27 @@
 
 export const brand = {
   /** Wordmark shown in the navigation and footer. */
-  name: "MERIDIAN",
+  name: "KEYRISE",
   /** Second line of the logo lockup. */
   nameSub: "EXPORT CO.",
   /** Legal / full name used in metadata and the copyright line. */
-  legalName: "Meridian Export Co.",
+  legalName: "Keyrise Export Co.",
   /** One line, used in structured data. */
   descriptor:
     "Cross-border trade specialists moving high-value cargo — vehicles, heavy machinery and industrial commodities.",
   /** Change this to your deployed origin before going live. */
-  url: "https://meridianexport.com",
+  url: "https://keyrisee.vercel.app",
   founded: 2014,
 } as const;
 
 export const contact = {
-  email: "deals@meridianexport.com",
+  email: "deals@keyrise.com",
   phone: "+1 (647) 555-0180",
   phoneHref: "tel:+16475550180",
-  website: "www.meridianexport.com",
+  website: "www.keyrise.com",
   officeLabel: "Toronto Office",
   address: {
-    company: "Meridian Export Co.",
+    company: "Keyrise Export Co.",
     line1: "Cross-Border Trade & Freight Forwarding",
     line2: "Unit 400, 120 Harbour Way",
     line3: "Toronto, ON, Canada",
@@ -125,7 +125,7 @@ export const whoWeAre = {
   lead: "Who",
   strong: "We Are?",
   paragraphs: [
-    "Welcome to Meridian Export Co., a cross-border trade company based in Canada and headquartered in Toronto. We handle the sourcing, movement and clearance of premium assets and commodities for corporate buyers and private clients, with a variety of routings built around what is actually being shipped. We specialise in high-value cargo — motor vehicles, heavy machinery, marine craft and industrial commodities. Every consignment is planned to suit the requirements of our customers.",
+    "Welcome to Keyrise Export Co., a cross-border trade company based in Canada and headquartered in Toronto. We handle the sourcing, movement and clearance of premium assets and commodities for corporate buyers and private clients, with a variety of routings built around what is actually being shipped. We specialise in high-value cargo — motor vehicles, heavy machinery, marine craft and industrial commodities. Every consignment is planned to suit the requirements of our customers.",
     "We treat every file the same way: one plan, one named contact, and a landed cost you can hold us to from quotation through to handover.",
   ],
   cta: { label: "LEARN MORE", href: "/about" },
@@ -283,14 +283,14 @@ export const pageBanners = {
 
 export const aboutPage = {
   lede1: { lead: "Moving Cargo Across", highlight: "Borders" },
-  lede: "Meridian Export Co. is a cross-border trade company operating out of Toronto, Ontario. We source, ship and clear high-value cargo for corporate buyers and private clients, working every leg of the route as a single counterparty.",
+  lede: "Keyrise Export Co. is a cross-border trade company operating out of Toronto, Ontario. We source, ship and clear high-value cargo for corporate buyers and private clients, working every leg of the route as a single counterparty.",
   cta: { label: "Make Enquiry!", href: "/contact" },
   sections: [
     {
       lead: "Who",
       strong: "We Are!",
       paragraphs: [
-        "Meridian Export Co. handles the sourcing, movement and clearance of premium assets and commodities. Working out of Toronto with vetted suppliers, brokers and carriers across North America, South America, Western Europe, the Gulf and East Asia — one counterparty, every leg of the route.",
+        "Keyrise Export Co. handles the sourcing, movement and clearance of premium assets and commodities. Working out of Toronto with vetted suppliers, brokers and carriers across North America, South America, Western Europe, the Gulf and East Asia — one counterparty, every leg of the route.",
         "Two decades moving motor vehicles, construction and agricultural machinery, watercraft and consumable goods — cargo where paperwork, valuation and handling all have to be right first time.",
       ],
     },
