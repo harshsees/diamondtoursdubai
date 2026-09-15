@@ -48,7 +48,7 @@ for (const vp of VIEWPORTS) {
     problems.push(`[${vp.name}] requestfailed: ${r.url()} — ${r.failure()?.errorText}`),
   );
 
-  await page.goto(base, { waitUntil: "networkidle" });
+  await page.goto(base, { waitUntil: "load" });
   await page.waitForTimeout(1200);
 
   for (const shot of SHOTS) {
@@ -67,7 +67,7 @@ for (const vp of VIEWPORTS) {
   }
 
   for (const slug of PAGES.slice(1)) {
-    await page.goto(`${base}/${slug}`, { waitUntil: "networkidle" });
+    await page.goto(`${base}/${slug}`, { waitUntil: "load" });
     await page.waitForTimeout(900);
     await page.screenshot({ path: `${out}/${vp.name}-page-${slug}.png`, fullPage: true });
   }

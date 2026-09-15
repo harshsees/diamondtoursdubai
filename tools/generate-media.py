@@ -20,8 +20,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "public", "media")
 
 # Brand palette, matching src/app/globals.css.
-INDIGO = (40, 22, 111)
-RED = (218, 37, 29)
+TEAL = (15, 61, 62)
+AMBER = (232, 163, 61)
 
 
 def write_skyline() -> None:
@@ -107,9 +107,9 @@ def write_icons() -> None:
     public = os.path.join(ROOT, "public")
     svg = (
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
-        '<rect width="32" height="32" rx="6" fill="#28166f"/>'
+        '<rect width="32" height="32" rx="6" fill="#0f3d3e"/>'
         '<path d="M16 5 19 13.5 16 27 13 13.5Z" fill="#fff"/>'
-        '<path d="M5 16h22" stroke="#da251d" stroke-width="1.8"/>'
+        '<path d="M5 16h22" stroke="#e8a33d" stroke-width="1.8"/>'
         '<ellipse cx="16" cy="16" rx="6.5" ry="11" fill="none" stroke="#fff" stroke-width="1.6"/>'
         "</svg>"
     )
@@ -118,11 +118,11 @@ def write_icons() -> None:
 
     # Raster marks for the browser tab and iOS home screen.
     size = 256
-    img = Image.new("RGB", (size, size), INDIGO)
+    img = Image.new("RGB", (size, size), TEAL)
     d = ImageDraw.Draw(img)
     s = size / 32
     d.polygon([(16 * s, 5 * s), (19 * s, 13.5 * s), (16 * s, 27 * s), (13 * s, 13.5 * s)], fill="white")
-    d.line([(5 * s, 16 * s), (27 * s, 16 * s)], fill=RED, width=int(1.8 * s))
+    d.line([(5 * s, 16 * s), (27 * s, 16 * s)], fill=AMBER, width=int(1.8 * s))
     d.ellipse(
         [16 * s - 6.5 * s, 16 * s - 11 * s, 16 * s + 6.5 * s, 16 * s + 11 * s],
         outline="white",

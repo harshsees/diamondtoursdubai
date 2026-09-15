@@ -28,7 +28,7 @@ for (const width of WIDTHS) {
   });
   page.on("pageerror", (e) => problems.push(`[${width}] pageerror: ${e.message}`));
 
-  await page.goto(base, { waitUntil: "networkidle" });
+  await page.goto(base, { waitUntil: "load" });
   await page.waitForTimeout(2400);
   await page.screenshot({ path: `${out}/w${width}-hero.png` });
 

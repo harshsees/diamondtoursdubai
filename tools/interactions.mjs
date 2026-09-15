@@ -27,7 +27,7 @@ function watch(page, tag) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
   watch(page, "desktop");
-  await page.goto(base, { waitUntil: "networkidle" });
+  await page.goto(base, { waitUntil: "load" });
   await page.waitForTimeout(1200);
 
   // Hero slider: step forward twice via the arrows.
@@ -84,7 +84,7 @@ function watch(page, tag) {
   });
   const page = await ctx.newPage();
   watch(page, "mobile");
-  await page.goto(base, { waitUntil: "networkidle" });
+  await page.goto(base, { waitUntil: "load" });
   await page.waitForTimeout(1200);
 
   await page.tap(".nav-toggle");

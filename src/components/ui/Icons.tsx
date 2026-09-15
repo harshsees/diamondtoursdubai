@@ -3,7 +3,7 @@
  *
  * Two families:
  *  - `ServiceIcon` — the 65 x 65 two-tone line marks used beside the
- *    differentiators and service rows. Indigo line work, red accents, the
+ *    differentiators and service rows. Teal line work, amber accents, the
  *    same visual weight as the reference's icon set.
  *  - the small solid glyphs used in the footer, header and controls.
  */
@@ -15,8 +15,8 @@ const line = {
   strokeLinejoin: "round" as const,
 };
 
-const P = "#28166f";
-const S = "#da251d";
+const P = "#0f3d3e";
+const S = "#e8a33d";
 
 const serviceIcons: Record<string, React.ReactNode> = {
   /* One named contact accountable for the file. */

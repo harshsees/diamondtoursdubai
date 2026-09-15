@@ -3,40 +3,46 @@
    Nothing here is invented: every value was read off the rendered page.
    ========================================================================== */
 :root {
-  /* brand */
-  --color-primary: #28166f;      /* deep indigo — bands, pills, gradients */
-  --color-secondary: #da251d;    /* red — active nav, icons, gradients */
-  --color-accent: #0088cc;       /* button / link blue */
-  --color-accent-dark: #006699;
-  --color-nav: #3b1867;          /* resting navigation link */
-  --color-ticker: #f44a56;       /* announcement tab */
-  --color-ticker-text: #fbff00;
+  /* brand — deep teal carries the structure, amber is the single accent */
+  --color-primary: #0f3d3e;       /* deep teal — bands, pills, gradients */
+  --color-primary-2: #1b6b5f;     /* the far end of the brand sweep */
+  --color-primary-soft: #e6efed;  /* teal at 8% — tints and hovers */
+  --color-accent: #e8a33d;        /* amber — CTA fills, marks, highlights */
+  --color-accent-hover: #f0b25a;
+  --color-accent-ink: #b5651d;    /* amber dark enough to set text in */
+  --color-nav: #4a5a57;           /* resting navigation link */
 
   /* surfaces */
   --color-background: #ffffff;
-  --color-surface: #ededed;      /* grey band behind "Who We Are" */
-  --color-surface-2: #eaeaea;    /* image placeholder ground */
+  --color-surface: #f4f7f6;       /* the band behind "Who We Are" */
+  --color-surface-2: #e4eae8;     /* image ground before load */
 
   /* text */
-  --color-text: #777777;
-  --color-heading: #212529;
-  --color-body-dark: #000000;
-  --color-muted: rgb(255 255 255 / 0.67);
+  --color-text: #5b6b68;
+  --color-heading: #12211f;
+  --color-body-dark: #1a2a27;
+  --color-muted: rgb(255 255 255 / 0.72);
 
   /* lines */
-  --color-border: #eaeaea;
-  --color-border-input: rgb(0 0 0 / 0.09);
+  --color-border: #dce5e3;
+  --color-border-input: rgb(15 61 62 / 0.16);
 
-  /* the signature left-to-right brand gradient */
-  --gradient-brand: linear-gradient(90deg, #28166f 0%, #da251d 100%);
-  /* the same gradient tightened so a centred heading splits mid-word */
-  --gradient-heading: linear-gradient(90deg, #28166f 40%, #da251d 55%);
+  /* Brand sweep stays tonal so white text is legible across its whole width. */
+  --gradient-brand: linear-gradient(90deg, #0f3d3e 0%, #1b6b5f 100%);
+  /* Heading sweep runs teal into burnt amber — both dark enough to read. */
+  --gradient-heading: linear-gradient(90deg, #0f3d3e 35%, #b5651d 62%);
+
+  /* elevation — used sparingly, only where something genuinely lifts */
+  --shadow-sm: 0 1px 2px rgb(15 61 62 / 0.06);
+  --shadow-md: 0 6px 20px -6px rgb(15 61 62 / 0.18);
 
   /* metrics */
   --container: 1140px;
   --gutter: 15px;
   --header-height: 100px;
   --header-height-sticky: 70px;
+  --radius: 8px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   --font-sans: var(--font-open-sans), "Open Sans", Arial, sans-serif;
   --font-script: var(--font-script), "Shadows Into Light", cursive;
@@ -92,7 +98,7 @@ a {
 }
 
 a:hover {
-  color: var(--color-accent-dark);
+  color: var(--color-primary);
 }
 
 ul {
@@ -120,7 +126,7 @@ textarea {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-secondary);
+  outline: 2px solid var(--color-accent-ink);
   outline-offset: 2px;
 }
 
@@ -267,7 +273,7 @@ h5 {
 .btn {
   display: inline-block;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 400;
   line-height: 1.5;
@@ -280,14 +286,17 @@ h5 {
 
 .btn-primary {
   background-color: var(--color-accent);
-  border-color: var(--color-accent) var(--color-accent) var(--color-accent-dark);
-  color: #fff;
+  border-color: var(--color-accent);
+  color: var(--color-heading);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-  background-color: #00a1f2;
-  border-color: #00aaff #00aaff var(--color-accent);
-  color: #fff;
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: var(--color-heading);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-dark {
@@ -320,7 +329,7 @@ h5 {
   flex-direction: column;
   width: 100%;
   background: #fff;
-  border-top: 3px solid var(--color-secondary);
+  border-top: 3px solid var(--color-accent-ink);
 }
 
 /* Sticky state: the announcement strip scrolls away and the bar locks to the
@@ -359,51 +368,39 @@ h5 {
 .ticker {
   position: relative;
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  gap: 14px;
   width: 100%;
   height: 40px;
   overflow: hidden;
-  border: 2px solid var(--color-ticker);
-  background: var(--gradient-brand);
+  background: transparent;
 }
 
 .ticker-title {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   flex: none;
-  height: 100%;
-  background: var(--color-ticker);
+  height: 26px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--color-accent);
 }
 
 .ticker-title span {
   display: block;
   margin: 0;
-  padding: 0 20px;
-  font-size: 20px;
+  font-size: 11px;
   font-weight: 700;
-  line-height: 36px;
-  letter-spacing: -1px;
-  color: #fff;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: var(--color-heading);
   text-transform: uppercase;
-}
-
-/* The little flag point that pushes out of the tab. */
-.ticker-title::after {
-  content: "";
-  position: absolute;
-  top: 8px;
-  right: -10px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 10px 0 10px 10px;
-  border-color: transparent transparent transparent var(--color-ticker);
 }
 
 .ticker-items {
   position: relative;
   flex: 1;
-  margin-left: 30px;
   height: 100%;
 }
 
@@ -413,9 +410,9 @@ h5 {
   margin: 0;
   display: flex;
   align-items: center;
-  font-size: 16px;
-  line-height: 36px;
-  color: var(--color-ticker-text);
+  font-size: 14px;
+  line-height: 1.4;
+  color: #eaf2f0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -440,17 +437,14 @@ h5 {
 }
 
 @media (max-width: 991px) {
-  .ticker-title span {
-    display: none;
+  .ticker {
+    gap: 10px;
   }
   .ticker-title {
-    width: 10px;
-  }
-  .ticker-items {
-    margin-left: 20px;
+    padding: 0 9px;
   }
   .ticker-item {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 
@@ -508,9 +502,42 @@ h5 {
   height: var(--header-height-sticky);
 }
 
+.main-nav a {
+  position: relative;
+}
+
+/* An amber rule under the current page reads more clearly than a colour
+   swap alone, and keeps every label at full contrast. */
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 14.4px;
+  right: 14.4px;
+  /* Anchored to the text's centre line, so it holds its offset whether the
+     header is at full height or shrunk to its sticky size. */
+  top: 50%;
+  margin-top: 13px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transition: transform 0.25s var(--ease);
+}
+
 .main-nav a:hover,
 .main-nav a[aria-current="page"] {
-  color: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+.main-nav a:hover::after,
+.main-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 991px) {
+  .main-nav a::after {
+    display: none;
+  }
 }
 
 /* --- social icons --- */
@@ -802,8 +829,8 @@ h5 {
 .heading h3 {
   display: block;
   margin: 0;
-  padding: 0 10px 10px;
-  border-bottom: 2px solid var(--color-border);
+  padding: 0 10px 14px;
+  border-bottom: 1px solid var(--color-border);
   font-weight: 400;
   color: #fff;
   background: var(--gradient-heading);
@@ -835,15 +862,21 @@ h5 {
 }
 
 .featured-box {
-  margin: 24px 0;
+  margin: 12px 0;
   min-height: 100px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   text-align: center;
+  transition: transform 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+
+.featured-box:hover {
+  transform: translateY(-3px);
+  background-color: var(--color-primary-soft);
 }
 
 .featured-box .box-content {
-  padding: 0 1.8rem;
-  border-radius: 8px;
+  padding: 1.6rem 1.8rem;
+  border-radius: var(--radius);
 }
 
 .featured-box img,
@@ -990,43 +1023,55 @@ h5 {
 }
 
 .pill-item {
-  margin: 0 16px 16px 0;
-  border-radius: 2px;
+  margin: 0 10px 10px 0;
 }
 
 .pill {
-  display: inline;
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: 999px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--color-border);
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
 .pill-count {
-  display: inline;
-  padding: 4px 12px;
-  font-size: 1rem;
-  line-height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
   text-align: center;
   background-color: var(--color-primary);
   color: #fff;
 }
 
 .pill-label {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
   max-width: 304px;
-  padding: 4px 12px;
+  padding: 6px 14px;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  color: var(--color-primary);
-  border: 2px solid var(--color-primary);
-  border-left: none;
+  color: var(--color-heading);
+  background: #fff;
+  border: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
-a.pill:hover .pill-label,
-.pill:hover .pill-label {
-  background-color: var(--color-primary);
-  color: #fff;
+a.pill:hover {
+  box-shadow: inset 0 0 0 1px var(--color-primary);
+  transform: translateY(-1px);
+}
+
+a.pill:hover .pill-label {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
 }
 
 @media (max-width: 767px) {
@@ -1043,7 +1088,7 @@ a.pill:hover .pill-label,
   flex-flow: row wrap;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 10px;
 }
 
 .callback-form .form-group {
@@ -1052,25 +1097,25 @@ a.pill:hover .pill-label,
 
 .form-control {
   display: block;
-  width: 182px;
-  padding: 6px 12px;
-  font-size: 0.85rem;
+  width: 196px;
+  padding: 11px 14px;
+  font-size: 0.875rem;
   line-height: 1.5;
-  color: #495057;
+  color: var(--color-heading);
   background-color: #fff;
   border: 1px solid var(--color-border-input);
-  border-radius: 4px;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border-radius: 6px;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .form-control::placeholder {
-  color: #adb5bd;
+  color: #93a3a0;
 }
 
 .form-control:focus {
   outline: 0;
-  border-color: #66b5e5;
-  box-shadow: 0 0 0 3px rgb(0 136 204 / 0.15);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgb(15 61 62 / 0.12);
 }
 
 .form-note {
@@ -1080,7 +1125,7 @@ a.pill:hover .pill-label,
 }
 
 .form-note.is-error {
-  color: var(--color-secondary);
+  color: var(--color-accent-ink);
 }
 
 .form-note.is-success {
@@ -1208,20 +1253,19 @@ a.pill:hover .pill-label,
   max-width: 326px;
   margin-right: 24px;
   margin-bottom: 16px;
-  opacity: 0.85;
 }
 
 .newsletter-form input {
   flex: 1;
   min-width: 0;
-  padding: 4px 8px 4px 16px;
-  font-size: 12px;
+  padding: 4px 8px 4px 18px;
+  font-size: 13px;
   line-height: 1.3;
-  color: #495057;
+  color: var(--color-heading);
   background: #fff;
   border: 0;
-  border-radius: 32px 0 0 32px;
-  height: 45px;
+  border-radius: 999px 0 0 999px;
+  height: 46px;
 }
 
 .newsletter-form input:focus {
@@ -1230,19 +1274,21 @@ a.pill:hover .pill-label,
 }
 
 .newsletter-form button {
-  height: 45px;
-  padding: 13.92px;
-  font-size: 0.7rem;
+  height: 46px;
+  padding: 0 20px;
+  font-size: 0.72rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
   color: var(--color-heading);
-  background: #fff;
+  background: var(--color-accent);
   border: 0;
-  border-radius: 0 32px 32px 0;
+  border-radius: 0 999px 999px 0;
   cursor: pointer;
+  transition: background-color 0.25s var(--ease);
 }
 
 .newsletter-form button:hover {
-  color: var(--color-secondary);
+  background: var(--color-accent-hover);
 }
 
 .years-badge {
@@ -1254,18 +1300,21 @@ a.pill:hover .pill-label,
 
 .years-badge .kicker {
   display: block;
-  font-size: 1.15em;
-  font-weight: 800;
-  letter-spacing: 0.14em;
+  margin-bottom: 4px;
+  font-size: 0.82em;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  opacity: 0.75;
 }
 
 .years-badge .count {
   display: block;
-  font-size: 5.2em;
+  font-size: 4.2em;
   font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.04em;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--color-accent);
 }
 
 .years-badge .count em {
@@ -1317,7 +1366,7 @@ a.pill:hover .pill-label,
 }
 
 .footer .social-icons a:hover {
-  background: var(--color-secondary);
+  background: var(--color-accent-ink);
   color: #fff;
 }
 
@@ -1372,9 +1421,9 @@ a.pill:hover .pill-label,
   align-items: center;
   gap: 8px;
   min-height: 50px;
-  padding: 7px 14px;
-  border: 1px solid rgb(255 255 255 / 0.45);
-  border-radius: 3px;
+  padding: 7px 16px;
+  border: 1px solid rgb(255 255 255 / 0.35);
+  border-radius: 6px;
   font-size: 0.78em;
   font-weight: 700;
   line-height: 1.15;
@@ -1519,7 +1568,8 @@ a.pill:hover .pill-label,
   top: 9px;
   width: 7px;
   height: 7px;
-  background: var(--color-secondary);
+  border-radius: 2px;
+  background: var(--color-accent);
 }
 
 @media (max-width: 575px) {
@@ -1530,7 +1580,7 @@ a.pill:hover .pill-label,
 }
 
 .contact-details li svg {
-  fill: var(--color-secondary);
+  fill: var(--color-accent-ink);
 }
 
 .contact-details p,
@@ -1539,7 +1589,7 @@ a.pill:hover .pill-label,
 }
 
 .contact-details a:hover {
-  color: var(--color-secondary);
+  color: var(--color-accent-ink);
 }
 
 /* --- contact page --- */

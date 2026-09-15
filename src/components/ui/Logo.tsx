@@ -25,7 +25,7 @@ export function Logo({ className = "" }: { className?: string }) {
         fontSize="27"
         fontWeight="800"
         letterSpacing="0.5"
-        fill="var(--color-secondary)"
+        fill="var(--color-primary)"
       >
         KEY
       </text>
@@ -51,7 +51,7 @@ export function Logo({ className = "" }: { className?: string }) {
         fontSize="27"
         fontWeight="800"
         letterSpacing="0.5"
-        fill="var(--color-secondary)"
+        fill="var(--color-primary)"
       >
         RISE
       </text>
