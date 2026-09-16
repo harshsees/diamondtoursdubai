@@ -1064,12 +1064,14 @@ h5 {
   transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
-a.pill:hover {
+/* Hover motion is keyed off .pill, not a.pill, so the list animates the same
+   way on every page whether or not the pills are links. */
+.pill:hover {
   box-shadow: inset 0 0 0 1px var(--color-primary);
   transform: translateY(-1px);
 }
 
-a.pill:hover .pill-label {
+.pill:hover .pill-label {
   background-color: var(--color-primary-soft);
   color: var(--color-primary);
 }
